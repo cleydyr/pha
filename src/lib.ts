@@ -1,54 +1,77 @@
 import fs from "fs";
 
-const csvContents = fs.readFileSync("pha.csv", "utf-8");
-
-const csvLines = csvContents.split("\n");
-
-const firstRow = csvLines[0].split(",");
-
-firstRow.shift();
+interface PHATable {
+  callNumber: (surname: string, name: string) => number;
+}
 
 type Entry = {
   name: string;
   callNumber: number;
 };
 
-const index = firstRow.reduce((acc, cur) => {
-  acc[cur[0]] = [];
-  return acc;
-}, {} as Record<string, Entry[]>);
+type Index = Record<string, Entry[]>;
 
-csvLines.forEach((line) => {
-  const cells = line.split(",");
+export class LinearPHATable implements PHATable {
+  #index?: Index = undefined;
 
-  const callNumber = cells.shift();
+  #loadIndex(): Index {
+    const csvContents = fs.readFileSync("pha.csv", "utf-8");
 
-  cells.forEach((cell, i) => {
-    if (cell === "") {
-      return;
-    }
+    const csvLines = csvContents.split("\n");
 
-    index[firstRow[i][0]].push({
-      name: cell,
-      callNumber: Number(callNumber),
+    const firstRow = csvLines[0].split(",");
+
+    firstRow.shift();
+
+    type Entry = {
+      name: string;
+      callNumber: number;
+    };
+
+    const index = firstRow.reduce((acc, cur) => {
+      acc[cur[0]] = [];
+      return acc;
+    }, {} as Record<string, Entry[]>);
+
+    csvLines.forEach((line) => {
+      const cells = line.split(",");
+
+      const callNumber = cells.shift();
+
+      cells.forEach((cell, i) => {
+        if (cell === "") {
+          return;
+        }
+
+        index[firstRow[i][0]].push({
+          name: cell,
+          callNumber: Number(callNumber),
+        });
+      });
     });
-  });
-});
 
-export function callNumber(surname: string, name: string): number {
-  const query = `${surname} ${name[0]}`;
-
-  const initial = surname[0];
-
-  let last = index[initial][0];
-
-  for (const entry of index[initial]) {
-    if (entry.name > query) {
-      return last.callNumber;
-    }
-
-    last = entry;
+    return index;
   }
 
-  return last.callNumber;
+  callNumber(surname: string, name: string): number {
+    if (this.#index === undefined) {
+      this.#index = this.#loadIndex();
+    }
+
+    const query = `${surname} ${name[0]}`;
+
+    const entries = this.#index[query[0]];
+
+    let last = entries[0];
+
+    for (const entry of entries) {
+      if (entry.name > query) {
+        break;
+      }
+
+      last = entry;
+    }
+
+    return last.callNumber;
+  }
 }
