@@ -6,7 +6,11 @@ interface PHATable {
   callNumber: (surname: string, name: string) => number;
 }
 
-export class RedBlackTreePHATable implements PHATable {
+export const PHATableFactory = {
+  createTable: (): PHATable => new RedBlackTreePHATable(),
+};
+
+class RedBlackTreePHATable implements PHATable {
   #index?: Tree<string, number> = undefined;
 
   #loadIndex(): Tree<string, number> {
