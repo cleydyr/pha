@@ -20,10 +20,12 @@ class RedBlackTreePHATable implements PHATable {
       .split("\n")
       .map((line) => line.split(","))
       .reduce(
-        (tree, array) =>
-          array
-            .filter((_, i) => i > 0)
-            .reduce((acc, cur) => acc.insert(cur, Number(array[0])), tree),
+        (tree, cells) =>
+          cells.reduce(
+            (tree_, cur, i) =>
+              i > 0 && cur !== "" ? tree_.insert(cur, Number(cells[0])) : tree_,
+            tree
+          ),
         createRBTree<string, number>((a: string, b: string) =>
           a.localeCompare(b)
         )
