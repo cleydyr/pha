@@ -4,7 +4,7 @@
 
 import { TestCase } from "./util";
 
-import { LinearPHATable } from "../src/lib";
+import { RedBlackTreePHATable } from "../src/lib";
 import { loadTestCasesFromCSV } from "./util";
 import fs from "fs";
 
@@ -12,7 +12,7 @@ const csvContents = fs.readFileSync("test/tests.csv", "utf-8");
 
 const testCases: TestCase[] = loadTestCasesFromCSV(csvContents);
 
-const phaTable = new LinearPHATable();
+const phaTable = new RedBlackTreePHATable();
 
 test.each(testCases)(
   "callNumber(%s, %s) = %d",

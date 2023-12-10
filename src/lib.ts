@@ -1,56 +1,29 @@
 import fs from "fs";
 
+import createRBTree, { Tree } from "functional-red-black-tree";
+
 interface PHATable {
   callNumber: (surname: string, name: string) => number;
 }
 
-type Entry = {
-  name: string;
-  callNumber: number;
-};
+export class RedBlackTreePHATable implements PHATable {
+  #index?: Tree<string, number> = undefined;
 
-type Index = Record<string, Entry[]>;
-
-export class LinearPHATable implements PHATable {
-  #index?: Index = undefined;
-
-  #loadIndex(): Index {
+  #loadIndex(): Tree<string, number> {
     const csvContents = fs.readFileSync("pha.csv", "utf-8");
 
-    const csvLines = csvContents.split("\n");
-
-    const firstRow = csvLines[0].split(",");
-
-    firstRow.shift();
-
-    type Entry = {
-      name: string;
-      callNumber: number;
-    };
-
-    const index = firstRow.reduce((acc, cur) => {
-      acc[cur[0]] = [];
-      return acc;
-    }, {} as Record<string, Entry[]>);
-
-    csvLines.forEach((line) => {
-      const cells = line.split(",");
-
-      const callNumber = cells.shift();
-
-      cells.forEach((cell, i) => {
-        if (cell === "") {
-          return;
-        }
-
-        index[firstRow[i][0]].push({
-          name: cell,
-          callNumber: Number(callNumber),
-        });
-      });
-    });
-
-    return index;
+    return csvContents
+      .split("\n")
+      .map((line) => line.split(","))
+      .reduce(
+        (tree, array) =>
+          array
+            .filter((_, i) => i > 0)
+            .reduce((acc, cur) => acc.insert(cur, Number(array[0])), tree),
+        createRBTree<string, number>((a: string, b: string) =>
+          a.localeCompare(b)
+        )
+      );
   }
 
   callNumber(surname: string, name: string): number {
@@ -60,18 +33,6 @@ export class LinearPHATable implements PHATable {
 
     const query = `${surname} ${name[0]}`;
 
-    const entries = this.#index[query[0]];
-
-    let last = entries[0];
-
-    for (const entry of entries) {
-      if (entry.name > query) {
-        break;
-      }
-
-      last = entry;
-    }
-
-    return last.callNumber;
+    return this.#index.le(query)?.value ?? -1;
   }
 }
