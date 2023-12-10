@@ -25,5 +25,9 @@
   },
   "dependencies": {
     "functional-red-black-tree": "^1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cleydyr/pha"
   }
 }
