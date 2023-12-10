@@ -37,8 +37,12 @@ class RedBlackTreePHATable implements PHATable {
       this.#index = this.#loadIndex();
     }
 
-    const query = `${surname} ${name[0]}`;
+    const query = `${removeDiacritics(surname)} ${removeDiacritics(name[0])}`;
 
     return this.#index.le(query)?.value ?? -1;
   }
+}
+
+function removeDiacritics(str: string): string {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
