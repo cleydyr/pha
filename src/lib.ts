@@ -1,6 +1,6 @@
 import createRBTree, { Tree } from "functional-red-black-tree";
 
-import pha from "../pha.json";
+import table from "../table";
 
 interface PHATable {
   callNumber: (surname: string, name: string) => number;
@@ -14,7 +14,9 @@ class RedBlackTreePHATable implements PHATable {
   #index?: Tree<string, number> = undefined;
 
   #loadIndex(): Tree<string, number> {
-    return Object.entries(pha).reduce((acc, [callNumber, entries]) => {
+    return table.split("\n").reduce((acc, line) => {
+      const [callNumber, ...entries] = line.split(",");
+
       return entries.reduce(
         (subAcc, entry) => subAcc.insert(entry, Number(callNumber)),
         acc
@@ -29,7 +31,7 @@ class RedBlackTreePHATable implements PHATable {
 
     const query = `${removeDiacritics(surname)} ${removeDiacritics(name[0])}`;
 
-    return this.#index.le(query)?.value ?? -1;
+    return this.#index.le(query).value ?? -1;
   }
 }
 

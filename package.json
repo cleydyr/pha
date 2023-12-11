@@ -2,13 +2,14 @@
   "name": "pha",
   "version": "1.0.0",
   "description": "A library to calculate the call number based on the PHA table as per the Heloisa Almeida Prado's \"Tabela PHA\"",
-  "main": "index.js",
+  "main": "dist/main.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "jest",
-    "transform": "ts-node transform.ts"
+    "transform": "ts-node transform.ts",
+    "build": "ts-node transform.ts && webpack --mode=production"
   },
   "keywords": [
     "pha",
