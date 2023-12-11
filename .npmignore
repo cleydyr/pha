@@ -1,0 +1,9 @@
+dist/*
+!dist/main.js
+jest.config.js
+pha.csv
+src/*
+test/*
+transform.ts
+tsconfig.json
+webpack.config.js

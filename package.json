@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest",
     "transform": "ts-node transform.ts",
-    "build": "ts-node transform.ts && webpack --mode=production"
+    "build": "npm run transform && webpack --mode=production",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "pha",
