@@ -1,7 +1,19 @@
 import fs from "fs";
 
-const csvContents = fs.readFileSync("pha.csv", "utf-8");
+import readline from "readline";
 
-const content = `export default \`${csvContents}\`;`;
+const outputFileName = "./src/table.ts";
 
-fs.writeFileSync("./table.ts", content);
+fs.writeFileSync(outputFileName, "export default `");
+
+const reader = readline.createInterface({
+  input: fs.createReadStream("pha.csv"),
+});
+
+reader.on("line", (line) => {
+  fs.writeFileSync(outputFileName, `${line}\n`, { flag: "a" });
+});
+
+reader.on("close", () => {
+  fs.writeFileSync(outputFileName, "`;", { flag: "a" });
+});

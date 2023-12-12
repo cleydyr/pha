@@ -1,8 +1,8 @@
 import createRBTree, { Tree } from "functional-red-black-tree";
 
-import table from "../table";
+import table from "./table";
 
-interface PHATable {
+export interface PHATable {
   callNumber: (surname: string, name: string) => number;
 }
 
