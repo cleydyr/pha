@@ -1,6 +1,6 @@
 {
   "name": "pha",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library to calculate the call number based on the PHA table as per the Heloisa Almeida Prado's \"Tabela PHA\"",
   "exports": {
     ".": {
@@ -14,9 +14,9 @@
   },
   "scripts": {
     "test": "jest",
-    "transform": "time ts-node transform.ts",
-    "build": "npm run transform && time tsc",
-    "prepublish": "npm run build"
+    "transform": "ts-node transform.ts",
+    "build": "npm run transform && tsc",
+    "prepublish": "npm run build && npm test"
   },
   "keywords": [
     "pha",
