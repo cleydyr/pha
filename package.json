@@ -1,6 +1,6 @@
 {
   "name": "pha",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A library to calculate the call number based on the PHA table as per the Heloisa Almeida Prado's \"Tabela PHA\"",
   "exports": {
     ".": {

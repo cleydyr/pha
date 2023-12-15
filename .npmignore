@@ -1,5 +1,4 @@
-dist/*
-!dist/main.js
+dist/tsconfig.tsbuildinfo
 jest.config.js
 pha.csv
 src/*
