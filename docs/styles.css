@@ -1,0 +1,356 @@
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/source-sans-3-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/source-sans-3-latin-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/source-serif-4-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/source-serif-4-latin-600.woff2") format("woff2");
+}
+
+:root {
+  --paper: #f4f1ea;
+  --ink: #1e3333;
+  --ink-soft: color-mix(in srgb, var(--ink) 58%, var(--paper));
+  --line: color-mix(in srgb, var(--ink) 18%, var(--paper));
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --measure: 36rem;
+  --font-ui: "Source Sans 3", system-ui, sans-serif;
+  --font-num: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --target: 2.75rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--paper);
+  accent-color: var(--ink);
+  caret-color: var(--ink);
+  padding-block: max(var(--space-6), env(safe-area-inset-top))
+    max(var(--space-8), env(safe-area-inset-bottom));
+  padding-inline: max(var(--space-4), env(safe-area-inset-left))
+    max(var(--space-4), env(safe-area-inset-right));
+}
+
+::selection {
+  background: color-mix(in srgb, var(--ink) 22%, var(--paper));
+  color: var(--ink);
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: min(100%, var(--measure));
+  margin-inline: auto;
+}
+
+h1 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-num);
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 0 0 var(--space-10);
+  color: var(--ink-soft);
+  max-width: 38ch;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+label,
+.result-heading {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+input[type="text"] {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--target);
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  overflow-wrap: anywhere;
+}
+
+input[type="text"]::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.hint {
+  margin: var(--space-4) 0 0;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.result {
+  margin-block: var(--space-10) var(--space-6);
+  padding-block: var(--space-5);
+  border-block: 1px solid var(--line);
+}
+
+.result-heading {
+  margin: 0 0 var(--space-2);
+}
+
+.result-value {
+  margin: 0;
+  font-family: var(--font-num);
+  font-size: clamp(3.25rem, 14vw, 6rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums lining-nums;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+.result-value.is-empty {
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+  min-height: var(--target);
+  padding-inline: var(--space-5);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  border-color: var(--line);
+}
+
+.btn-copy {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-copy:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--ink) 88%, var(--paper));
+  }
+
+  .btn-clear:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  }
+}
+
+.btn-copy:active:not(:disabled) {
+  background: color-mix(in srgb, var(--ink) 80%, #000);
+}
+
+.btn-clear {
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+
+.status {
+  min-height: 1.45em;
+  margin: var(--space-3) 0 0;
+  font-size: 0.9375rem;
+}
+
+.status.is-error {
+  color: var(--ink);
+}
+
+.help {
+  margin-top: var(--space-12);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-5);
+}
+
+.help summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: var(--target);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.help summary::-webkit-details-marker {
+  display: none;
+}
+
+.help summary::after {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  margin-inline-start: auto;
+  border-inline-end: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  translate: 0 -0.15em;
+}
+
+.help[open] summary::after {
+  transform: rotate(225deg);
+  translate: 0 0.1em;
+}
+
+.help-body {
+  margin: var(--space-3) 0 0;
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+
+.help-body ul {
+  margin: var(--space-3) 0 0;
+  padding-inline-start: 1.15em;
+}
+
+.help-body li + li {
+  margin-top: var(--space-2);
+}
+
+.help-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  body {
+    padding-block-start: var(--space-12);
+  }
+
+  .fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+
+  .actions {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .btn-copy {
+    flex: 1 1 auto;
+  }
+
+  .btn-clear {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    margin-inline: calc(-1 * max(var(--space-4), env(safe-area-inset-left)));
+    padding-inline: max(var(--space-4), env(safe-area-inset-left))
+      max(var(--space-4), env(safe-area-inset-right));
+    padding-top: var(--space-3);
+    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--paper) 0%, transparent),
+      var(--paper) 28%
+    );
+  }
+}
+
+@media (pointer: coarse) {
+  button,
+  input[type="text"],
+  .help summary {
+    min-height: 2.75rem;
+  }
+}
