@@ -10,6 +10,7 @@ target_fingerprint: "sha256:7977417dbc8fff30056ca4c5fc59db5f58ae821d72b23ca76a79
 target_path: /Users/thecleydyr/source/pha/docs/index.html
 timestamp: 2026-09-08T17-01-46Z
 slug: docs-index-html
+closed: true
 ---
 Method: dual-agent (A: fc0b05b6-374c-47fe-9d86-f533e0b347a0 · B: 24f435b3-ec0d-422b-8e5c-72d24ad3c91e)
 
